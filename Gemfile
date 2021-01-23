@@ -16,3 +16,6 @@
 source 'http://rubygems.org'
 
 gem 'roda'
+gem 'activerecord'
+gem 'standalone_migrations', '~> 5.2', '>= 5.2.7'
+gem 'pg'
