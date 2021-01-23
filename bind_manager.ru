@@ -13,6 +13,9 @@
 #
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
-require_relative 'webservices/app'
+require_relative 'backend/app'
+require_relative 'connector'
+
+Connector.instance.connect2database
 
 run BindApi.freeze.app
