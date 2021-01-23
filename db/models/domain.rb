@@ -20,11 +20,28 @@ class Domain < ActiveRecord::Base
   validates :allow_transfer, uniqueness: true, presence: true, length: {maximum: 512}
 
   def to_bind9
-    "
-zone \"#{self.zone}\" {
+    "zone \"#{self.zone}\" {
   type #{self.mode};
   file \"#{self.file}\";
   allow-transfer { #{self.allow_transfer}; };
-};"
+};
+"
+  end
+
+  def to_file
+    ";
+;
+;
+$TTL    604800
+@       IN      SOA     #{self.zone}. admin.#{self.zone}. (
+                              2        ; Serial
+                         604800        ; Refresh
+                          86400        ; Retry
+                        2419200        ; Expire
+                         604800 )      ; Negative Cache TTL
+;
+@       IN      NS      #{self.zone}.
+@       IN      A       #{self.allow_transfer}
+"
   end
 end

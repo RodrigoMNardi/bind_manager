@@ -30,9 +30,10 @@ class BindApi < Roda
 
         domain = Domain.create(params)
         if domain.valid?
+          Config.instance.apply_config
           {id: domain.id, status: true, message: 'Domain created successfully'}
         else
-          {status: true, message: 'Failed to create a domain'}
+          {status: false, message: 'Failed to create a domain'}
         end
       end
 
@@ -45,9 +46,10 @@ class BindApi < Roda
         return {status: false, message: 'Domain not found'} if domain.nil?
 
         if domain.update(params)
+          Config.instance.apply_config
           {id: domain.id, status: true, message: 'Domain updated'}
         else
-          {id: domain.id, status: true, message: 'Failed to update domain'}
+          {id: domain.id, status: false, message: 'Failed to update domain'}
         end
       end
 
@@ -57,10 +59,12 @@ class BindApi < Roda
         domain = Domain.where(id: r.params['id'].to_i).first
         return {status: false, message: 'Domain not found'} if domain.nil?
 
+        file  = domain.file
         if domain.destroy
+          Config.instance.remove_config(file)
           {id: domain.id, status: true, message: 'Domain deleted'}
         else
-          {id: domain.id, status: true, message: 'Failed to delete domain'}
+          {id: domain.id, status: false, message: 'Failed to delete domain'}
         end
       end
     end

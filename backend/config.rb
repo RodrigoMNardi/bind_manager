@@ -13,17 +13,32 @@
 #
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
-version: "3.3"
-services:
-  bind_manager:
-    image: images/bind_manager
-    container_name: bind_manager
-    build:
-      context: ./../
-      dockerfile: ./docker/Dockerfile
-      args:
-        buildno: 2
-    restart: on-failure
-    ports:
-      - "8000:9292"
-    command: rackup -o 0.0.0.0 bind_manager.ru
+require 'singleton'
+require 'fileutils'
+class Config
+  include Singleton
+  BIND9_FILE = '/etc/bind/named.conf.local'
+  def initialize
+    unless File.exist? '/etc/bind/zones'
+      FileUtils.mkdir '/etc/bind/zones'
+    end
+
+  end
+
+  def apply_config
+    File.write(BIND9_FILE, '')
+    Domain.all.each do |entry|
+      File.write(BIND9_FILE, entry.to_bind9, mode: 'a')
+      File.write(entry.file, entry.to_file)
+    end
+
+    %x(/etc/init.d/bind9 restart)
+    %x(rndc reload)
+  end
+
+  def remove_config(file)
+    FileUtils.rm(file) if File.exist? file
+
+    apply_config
+  end
+end
