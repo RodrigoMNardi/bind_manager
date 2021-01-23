@@ -1,0 +1,10 @@
+production:
+  adapter: postgres
+  encoding: utf8
+  pool: 20
+  username:
+  password:
+  host:
+  port:
+  reconnect: true
+  database:
