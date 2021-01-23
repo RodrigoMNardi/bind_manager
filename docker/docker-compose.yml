@@ -1,0 +1,14 @@
+version: "3.3"
+services:
+  bind_manager:
+    image: images/bind_manager
+    container_name: bind_manager
+    build:
+      context: ./../
+      dockerfile: ./docker/Dockerfile
+      args:
+        buildno: 2
+    restart: on-failure
+    ports:
+      - "8000:9292"
+    command: rackup -o 0.0.0.0 bind_manager.ru
