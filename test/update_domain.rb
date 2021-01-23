@@ -13,10 +13,19 @@
 #
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
-source 'http://rubygems.org'
+require 'rest-client'
+require 'json'
 
-gem 'roda'
-gem 'activerecord'
-gem 'standalone_migrations', '~> 5.2', '>= 5.2.7'
-gem 'pg'
-gem 'rest-client'
+params =
+  {
+    id: 1,
+    zone: 'dallas1.example.com',
+    type: 'master',
+    file: '/etc/bind/zones/db.dallas1.example.com',
+    allow_transfer: '10.128.0.1'
+  }
+resp   = RestClient.post "0.0.0.0:9292/v1/alter", params.to_json, {content_type: :json, accept: :json}
+json = JSON.parse(resp)
+
+puts json.inspect
+
