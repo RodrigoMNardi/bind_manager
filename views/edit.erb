@@ -1,0 +1,29 @@
+<h2>Edit Domain #<%= @domain.id %>:</h2>
+<div style="padding-left: 15px">
+  <% f = Forme::Form.new %>
+  <%= f.open(:action=> "/portal/edit/#{@domain.id}", :method=>:post) %>
+  <div class="form-group">
+    <label for="email">Zone:</label>
+    <%= f.input(:text, name: 'zone', value: @domain.zone, class: 'form-control', style: 'width: 250px') %>
+  </div>
+
+  <div class="form-group">
+    <label for="email">Allow-transfer (IP):</label>
+    <%= f.input(:text, name: 'allow_transfer', value: @domain.allow_transfer,
+                class: 'form-control', style: 'width: 250px') %>
+  </div>
+
+  <div class="form-group">
+    <label for="email">Type:</label>
+    <%= f.input(:text, name: 'type', value: @domain.mode, class: 'form-control', style: 'width: 250px') %>
+  </div>
+
+  <div class="form-group">
+    <label for="email">File:</label>
+    <%= f.input(:text, name: 'file', value: @domain.file, class: 'form-control', style: 'width: 250px') %>
+  </div>
+  <div class="form-group">
+    <%= f.button(value: 'Create', class: 'btn btn-primary') %>
+  </div>
+  <%= f.close %>
+</div>

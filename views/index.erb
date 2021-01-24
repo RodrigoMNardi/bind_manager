@@ -1,0 +1,67 @@
+<h1>Domain list:</h1>
+
+<p>
+<table id='domains' class="table table-striped table-bordered" style="width:100%">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Zone</th>
+    <th>Allow-transfer</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @domains.each do |domain| %>
+    <tr>
+      <td><%= domain.id %></td>
+      <td><%= domain.zone %></td>
+      <td><%= domain.allow_transfer %></td>
+      <td>
+        <a href="/portal/edit/<%= domain.id %>">Edit</a> |
+        <a href="/portal/delete/<%= domain.id %>">Delete</a>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+</p>
+
+<h2>Create a new domain:</h2>
+<div style="padding-left: 15px">
+  <% f = Forme::Form.new %>
+  <%= f.open(:action=>'/portal/create', :method=>:post) %>
+  <div class="form-group">
+    <label for="email">Zone:</label>
+    <%= f.input(:text, name: 'zone', class: 'form-control', style: 'width: 250px') %>
+  </div>
+
+  <div class="form-group">
+    <label for="email">Allow-transfer (IP):</label>
+    <%= f.input(:text, name: 'allow_transfer', class: 'form-control', style: 'width: 250px') %>
+  </div>
+
+  <div class="form-group">
+    <label for="email">Type:</label>
+    <%= f.input(:text, name: 'type', value: 'master', class: 'form-control', style: 'width: 250px') %>
+  </div>
+
+  <div class="form-group">
+    <label for="email">File:</label>
+    <%= f.input(:text, name: 'file', class: 'form-control', style: 'width: 250px') %>
+  </div>
+  <div class="form-group">
+    <%= f.button(value: 'Create', class: 'btn btn-primary') %>
+  </div>
+  <%= f.close %>
+</div>
+
+
+<script>
+  $(document).ready( function () {
+    $('#domains').DataTable();
+  } );
+</script>
+
+
+
+

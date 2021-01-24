@@ -22,7 +22,6 @@ class Config
     unless File.exist? '/etc/bind/zones'
       FileUtils.mkdir '/etc/bind/zones'
     end
-
   end
 
   def apply_config
