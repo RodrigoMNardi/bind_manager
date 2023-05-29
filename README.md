@@ -10,3 +10,7 @@ DNS control system using BIND9, where it is possible to create, change and delet
 # Credits
 Rodrigo Nardi. 2023. Brazil
 
+$${\color{orange}COLOR}$$
+$\textcolor{red}{\textsf{Color didint work .}}$
+
+`#00CC00**Success**`
