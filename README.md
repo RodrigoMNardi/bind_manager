@@ -6,6 +6,7 @@ DNS control system using BIND9, where it is possible to create, change and delet
 # Deploy
 
 # Tests
+rake unit
 
 # Credits
 Rodrigo Nardi. 2023. Brazil.
