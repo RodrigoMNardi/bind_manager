@@ -10,5 +10,3 @@ rake unit
 
 # Credits
 Rodrigo Nardi. 2023. Brazil.
-
-
